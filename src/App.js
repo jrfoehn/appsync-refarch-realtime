@@ -7,17 +7,10 @@ import {listMoviess,listReviewss} from './graphql/queries';
 import {updateReviews,createMessage} from './graphql/mutations';
 import {onUpdateMovies,onUpdateReviews,onCreateMessage} from './graphql/subscriptions';
 import Amplify, {API,graphqlOperation} from 'aws-amplify';
-import aws_exports from './aws-exports'; // specify the location of aws-exports.js file on your project
+import awsmobile from './aws-exports'; // specify the location of aws-exports.js file on your project
+import { withAuthenticator } from 'aws-amplify-react'; // or 'aws-amplify-react-native';
 
-Amplify.configure({
-  Auth: {
-    identityPoolId: aws_exports.aws_cognito_identity_pool_id,
-    region: aws_exports.aws_cognito_region ,
-  },
-  aws_appsync_graphqlEndpoint: aws_exports.aws_appsync_graphqlEndpoint,
-  aws_appsync_region: aws_exports.aws_appsync_region,
-  aws_appsync_authenticationType: 'AWS_IAM'
-});
+Amplify.configure(awsmobile);
 
 
 class App extends Component {
@@ -435,4 +428,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withAuthenticator(App, true);
